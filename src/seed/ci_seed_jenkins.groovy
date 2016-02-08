@@ -14,9 +14,9 @@ folder(folderPath) {
 }
 
 URL gitBranchUrl = "https://api.github.com/repos/$repo/branches".toURL()
-List gitBranches = new JsonSlurper().parse(branchUrl.newReader())
+List gitBranches = new JsonSlurper().parse(gitBranchUrl.newReader())
 
-branches.each { branch ->
+gitBranches.each { branch ->
   String branchName = branch.name.replaceAll('/', '-')
   String jobName = "$jobPrefix/$branchName"
   String jobPath = "$folderPath/$jobName"
