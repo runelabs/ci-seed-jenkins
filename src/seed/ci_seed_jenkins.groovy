@@ -12,6 +12,7 @@ String jobPrefix = 'dsl-seed'
 folder(folderPath) {
   description 'Rune - initial folder/job-branch creation.'
 }
+folder "$folderPath/$jobPrefix"
 
 URL gitBranchUrl = "https://api.github.com/repos/$repo/branches".toURL()
 List gitBranches = new JsonSlurper().parse(gitBranchUrl.newReader())
