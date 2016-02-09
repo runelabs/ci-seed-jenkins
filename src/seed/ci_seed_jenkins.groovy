@@ -31,7 +31,8 @@ gitBranches.each { branch ->
 
   job("$jobFullPath") {
     scm {
-      github repo, branch.name
+      github repo, branch.name, 'ssh'
+      credentials('AutotesterNetlife')
     }
     triggers {
       scm 'H/5 * * * *'
