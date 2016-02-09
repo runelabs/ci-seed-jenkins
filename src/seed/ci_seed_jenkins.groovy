@@ -6,8 +6,10 @@
 import groovy.json.JsonSlurper
 
 String folderPath = 'rune'
-String repo = 'runelabs/ci-seed-jenkins'
-String jobPrefix = 'dsl-seed'
+//String repo = 'runelabs/ci-seed-jenkins'
+//String jobPrefix = 'dsl-seed'
+String repo = 'NetlifeBackupSolutions/CaptureXamarin'
+String jobPrefix = 'uniwin'
 
 folder(folderPath) {
   description 'Rune - initial folder/job-branch creation.'
@@ -19,12 +21,15 @@ List gitBranches = new JsonSlurper().parse(gitBranchUrl.newReader())
 
 gitBranches.each { branch ->
   String branchName = branch.name.replaceAll('/', '-')
-  String jobName = "$jobPrefix/$branchName"
-  String jobPath = "$folderPath/$jobName"
-    
+  String jobBase = "$jobPrefix/$branchName"
+  String jobPath = "$folderPath/$jobBase"
+
   folder "$jobPath"
 
-  job("$jobPath/build-seed") {
+  String jobName = "build-seed"
+  String jobFullPath = "$jobPath/$jobName"
+
+  job("$jobFullPath") {
     scm {
       github repo, branch.name
     }
@@ -32,7 +37,9 @@ gitBranches.each { branch ->
       scm 'H/5 * * * *'
     }
     steps {
-      shell 'echo job placeholder ; date ; git branch -va'
+      shell "echo $jobFullPath"
+      shell 'date'
+      shell 'git branch -va'
     }
   }
 }
